@@ -1,18 +1,52 @@
+import { useContext, useRef } from "react";
+import { PostListContext } from "../store/post-list-store";
+
 const CreatePost = () => { 
-  return <form className="createPost">
-  <div className="mb-3">
-    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+  const userIdElement = useRef();
+  const postTitleElement = useRef();
+  const postBodyElement = useRef();
+  const reactionsElement = useRef();
+  const tagsElement = useRef();
+  const {addPost} = useContext(PostListContext)
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    const userId = userIdElement.current.value;
+    const postTitle = postTitleElement.current.value;
+    const postBody = postBodyElement.current.value;
+    const reactions = reactionsElement.current.value;
+    const tags = tagsElement.current.value.split(" ");
+    userIdElement.current.value='';
+    postTitleElement.current.value='';
+    postBodyElement.current.value='';
+    reactionsElement.current.value='';
+    tagsElement.current.value='';
+    addPost(userId,postTitle,postBody,reactions,tags
+    )
+  };
+
+  return <form className="createPost" onSubmit={handleSubmit}>
+      <div className="mb-3">
+    <label htmlFor="userId" className="form-label">Enter your User ID here</label>
+    <input type="text" className="form-control" ref={userIdElement} id="userID" placeholder="Your user Id"/>
   </div>
   <div className="mb-3">
-    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-    <input type="password" className="form-control" id="exampleInputPassword1"/>
+    <label htmlFor="title" className="form-label">Title</label>
+    <input type="text" className="form-control" ref={postTitleElement} id="title" placeholder="How are you feeling today"/>
   </div>
-  <div className="mb-3 form-check">
-    <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+  <div className="mb-3">
+    <label htmlFor="body" className="form-label">Post Content</label>
+    <textarea rows='4' type="text" className="form-control" ref={postBodyElement} id="body" placeholder="Tell us more about it"/>
   </div>
-  <button type="submit" className="btn btn-primary">Submit</button>
+  <div className="mb-3">
+    <label htmlFor="reactions" className="form-label">No of Reactions</label>
+    <input type="text" className="form-control" ref={reactionsElement} id="reactions" placeholder="How many people reacted to this Post"/>
+  </div>
+  <div className="mb-3">
+    <label htmlFor="tags" className="form-label">Enter Your hashtags here</label>
+    <input type="text" className="form-control" ref={tagsElement} id="title" placeholder="please enter tags using space"/>
+  </div>
+
+  <button type="submit" className="btn btn-primary">Post</button>
 </form>
 };
 export default CreatePost;
