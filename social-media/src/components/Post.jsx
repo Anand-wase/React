@@ -1,6 +1,7 @@
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useContext } from "react";
 import { PostListContext } from "../store/post-list-store";
+import { FcLike, FcDislike } from "react-icons/fc";
 
 const Post = ({post}) => {
   const {deletePost} = useContext(PostListContext);
@@ -14,7 +15,7 @@ const Post = ({post}) => {
     </h5>
     <p className="card-text">{post.body}</p>
     {post.tags.map((tag)=><span className="badge text-bg-primary hashtag" key={tag}>{tag}</span>)}
-    <div className="alert alert-success reactions" role="alert">'This Post has been reacted by {post.reactions} people</div>
+    <div className="alert alert-success reactions" role="alert"><FcLike /> : {post.reactions.likes} <br/><FcDislike /> : {post.reactions.dislikes}</div>
   </div>
 </div>
 };
