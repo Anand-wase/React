@@ -38,7 +38,6 @@ const PostlistProvider = ({children}) => {
   const [postlist, dispatchPostList] = useReducer(postListReducer,[]);
   const [fetching, setFetching] = useState(false)
   const addPost = (userId,postTitle,postBody,reactions,tags)=>{
-    console.log(userId,postTitle,postBody,reactions,tags);
     dispatchPostList({
       type : 'ADD_POST',
       payload : {
@@ -77,7 +76,6 @@ const PostlistProvider = ({children}) => {
     .then(data =>{
       addInitialPosts(data.posts);
       setFetching(false);
-      console.log(postlist)
   });
   return () => {
     controller.abort();
